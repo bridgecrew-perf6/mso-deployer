@@ -19,12 +19,13 @@ package controllers
 import (
 	"context"
 
+	operatorv1alpha1 "github.com/cmwylie19/mso-deployer/api/v1alpha1"
+	monv1 "github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1"
+	rhobs "github.com/rhobs/observability-operator/pkg/apis/monitoring/v1alpha1"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
-
-	operatorv1alpha1 "github.com/cmwylie19/mso-deployer/api/v1alpha1"
 )
 
 // MSOReconciler reconciles a MSO object
@@ -58,5 +59,9 @@ func (r *MSOReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 func (r *MSOReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&operatorv1alpha1.MSO{}).
+		Owns(&monv1.ServiceMonitor{}).
+		Owns(&monv1.Alertmanager{}).
+		Owns(&monv1.PrometheusRule{}).
+		Owns(&rhobs.MonitoringStack{}).
 		Complete(r)
 }
