@@ -1,0 +1,20 @@
+# permissions for end users to view msoes.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: mso-viewer-role
+rules:
+- apiGroups:
+  - operator.cmwylie19
+  resources:
+  - msoes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - operator.cmwylie19
+  resources:
+  - msoes/status
+  verbs:
+  - get

@@ -1,0 +1,6 @@
+apiVersion: operator.cmwylie19/v1alpha1
+kind: MSO
+metadata:
+  name: mso-sample
+spec:
+  # TODO(user): Add fields here

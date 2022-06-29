@@ -1,0 +1,24 @@
+# permissions for end users to edit msoes.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: mso-editor-role
+rules:
+- apiGroups:
+  - operator.cmwylie19
+  resources:
+  - msoes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - operator.cmwylie19
+  resources:
+  - msoes/status
+  verbs:
+  - get
