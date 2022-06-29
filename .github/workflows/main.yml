@@ -15,7 +15,6 @@ jobs:
         with:
           pattern: '\[(BUGFIX|DOCS|FEATURE|TASK)\] .+$'
           error: 'Your first line has to contain a commit type like "[BUGFIX]".'
-          checkAllCommitMessages: 'true'
           accessToken: ${{ secrets.GITHUB_TOKEN }}
 
   unit-test:
@@ -30,4 +29,4 @@ jobs:
         go-version: 1.17
 
     - name: Run unit tests
-      run: go test ./... -coverprofile cover.out
+      run: make test
