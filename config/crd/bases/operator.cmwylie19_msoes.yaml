@@ -35,13 +35,76 @@ spec:
           spec:
             description: MSOSpec defines the desired state of MSO
             properties:
-              foo:
-                description: Foo is an example field of MSO. Edit mso_types.go to
-                  remove/update
+              isv:
+                default: Starburst
+                description: name of ISV to monitor, to determine which servicemonitors
+                  to apply
                 type: string
+              isvNamespace:
+                description: Namespace of ISV to monitor
+                type: string
+              logLevel:
+                default: info
+                description: Loglevel set log levels of configured components
+                enum:
+                - debug
+                - info
+                - warning
+                type: string
+              manifestUrl:
+                description: URL to apply manifests
+                type: string
+              namespace:
+                default: monitoring-stack-operator
+                description: Namespace to deploy mso optional
+                type: string
+              resources:
+                default:
+                  limits:
+                    cpu: 500m
+                    memory: 512M
+                  requests:
+                    cpu: 100m
+                    memory: 256M
+                description: Define resources requests and limits for Monitoring Stack
+                  Pods.
+                properties:
+                  limits:
+                    additionalProperties:
+                      anyOf:
+                      - type: integer
+                      - type: string
+                      pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                      x-kubernetes-int-or-string: true
+                    description: 'Limits describes the maximum amount of compute resources
+                      allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/'
+                    type: object
+                  requests:
+                    additionalProperties:
+                      anyOf:
+                      - type: integer
+                      - type: string
+                      pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                      x-kubernetes-int-or-string: true
+                    description: 'Requests describes the minimum amount of compute
+                      resources required. If Requests is omitted for a container,
+                      it defaults to Limits if that is explicitly specified, otherwise
+                      to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/'
+                    type: object
+                type: object
             type: object
           status:
             description: MSOStatus defines the observed state of MSO
+            properties:
+              msos:
+                description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
+                  of cluster Important: Run "make" to regenerate code after modifying
+                  this file MSOs are the names of the mso pods'
+                items:
+                  type: string
+                type: array
+            required:
+            - msos
             type: object
         type: object
     served: true
