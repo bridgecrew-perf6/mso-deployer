@@ -16,17 +16,19 @@ jobs:
           pattern: '\[(BUGFIX|DOCS|FEATURE|TASK)\] .+$'
           error: 'Your first line has to contain a commit type like "[BUGFIX]".'
           accessToken: ${{ secrets.GITHUB_TOKEN }}
+          checkAllCommitMessages: 'true'
 
-  unit-test:
-    name: "unit-test"
-    needs: check-commit-message
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: 1.17
 
-    - name: Run unit tests
-      run: make test
+  # unit-test:
+  #   name: "unit-test"
+  #   needs: check-commit-message
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Set up Go
+  #     uses: actions/setup-go@v2
+  #     with:
+  #       go-version: 1.17
+
+  #   - name: Run unit tests
+  #     run: make test
