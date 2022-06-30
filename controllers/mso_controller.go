@@ -50,6 +50,25 @@ type MSOReconciler struct {
 func (r *MSOReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
+	op_instance := &operatorv1alpha1.MSO{}
+
+	// check if MSO instance exists
+	err := r.Get(ctx, req.NamespacedName, op_instance)
+	if err != nil {
+
+		// if MSO does not exist, create an instance
+		err := r.Create(ctx, op_instance)
+		if err != nil {
+			return ctrl.Result{}, err
+		}
+
+		// create ServiceMonitor
+
+		// create PrometheusRule
+
+		// create AlertManagerConfig
+	}
+
 	// TODO(user): your logic here
 
 	return ctrl.Result{}, nil
